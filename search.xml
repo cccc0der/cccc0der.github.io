@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[categories]]></title>
+    <title><![CDATA[机器学习]]></title>
+    <url>%2F2017%2F12%2F06%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"><![CDATA[var gitment = new Gitment({ id: '页面 ID', // 可选。默认为 location.href owner: 'cccc0der', repo: 'cccc0der.github.io', oauth: { client_id: '41a99724da43d76ac488', client_secret: 'f756f12b5d498ec0f0b0969b5c8bee4d90dbdc52', }, }) gitment.render('container')]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[]]></title>
     <url>%2F2017%2F12%2F06%2Findex%2F</url>
     <content type="text"></content>
   </entry>
