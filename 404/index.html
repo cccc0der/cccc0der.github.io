@@ -342,6 +342,22 @@
           
 
   
+		<div id="container"></div>
+		<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+		<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+		<script>
+		var gitment = new Gitment({
+		  
+		  owner: 'cccc0der',
+		  repo: 'cccc0der.github.io',
+		  oauth: {
+			client_id: '41a99724da43d76ac488',
+			client_secret: 'f756f12b5d498ec0f0b0969b5c8bee4d90dbdc52',
+		  },
+		})
+		gitment.render('container')
+		</script>
+  
 
 
 
@@ -388,6 +404,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
