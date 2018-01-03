@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,源码剖析," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章仅供参考，转载请注明出处: https://cccc0der.github.io/">
+<meta name="keywords" content="Java,源码剖析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java源码剖析从入门到放弃【类型篇】 — Integer">
+<meta property="og:url" content="http://cccc0der.github.io/2017/12/17/Java源码剖析从入门到放弃 — Integer(一)/index.html">
+<meta property="og:site_name" content="code从入门到放弃">
+<meta property="og:description" content="文章仅供参考，转载请注明出处: https://cccc0der.github.io/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-03T14:46:32.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java源码剖析从入门到放弃【类型篇】 — Integer">
+<meta name="twitter:description" content="文章仅供参考，转载请注明出处: https://cccc0der.github.io/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://cccc0der.github.io/2017/12/17/Java源码剖析从入门到放弃 — Integer(一)/"/>
+
+
+
+
+
+  <title>Java源码剖析从入门到放弃【类型篇】 — Integer | code从入门到放弃</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e2f1e6c861c89e6890870cc420645f58";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">code从入门到放弃</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://cccc0der.github.io/2017/12/17/Java源码剖析从入门到放弃 — Integer(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cccc0der">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="code从入门到放弃">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java源码剖析从入门到放弃【类型篇】 — Integer</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T18:03:20+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java源码剖析从入门到放弃【类型篇】/" itemprop="url" rel="index">
+                    <span itemprop="name">Java源码剖析从入门到放弃【类型篇】</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>文章仅供参考，转载请注明出处: <code>https://cccc0der.github.io/</code>  </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　<strong>Java</strong>是一门面向对象的语言，从接触<strong>OOP</strong>那一刻起，程序员就被告知在<strong>OOP</strong>的世界中，一切皆是对象。<br>　　由此，某书上说程序员是出轨率最高的职业看来也不是没有道理，因为放眼望去，在我们程序员的世界里对象太多了，而我们最怕的也是<strong>找不到对象</strong>。<br>　　在这样的环境下，<code>int</code>,<code>float</code>,<code>double</code>等这样的基本类型单身狗，显然不符合<strong>Java</strong>特征，那么来看一下<strong>Java</strong>是如何为这些单身狗设计相应对象的吧。  </p>
+<h3 id="Number类"><a href="#Number类" class="headerlink" title="Number类"></a>Number类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Number</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">8742448824652078965L</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">intValue</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">long</span> <span class="title">longValue</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">float</span> <span class="title">floatValue</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">doubleValue</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">byteValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (<span class="keyword">byte</span>)intValue(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">short</span> <span class="title">shortValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (<span class="keyword">short</span>)intValue(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　<strong>Java</strong>的设计者首先为所有的数值类型做了一层抽象，并将所有的基本数值类型方法放到了这个<code>Number</code>类中，这位看官可能要问了：我只要将取值方法的返回值修改为<code>Object</code>类型或者将方法改为<strong>泛型方法</strong>不就可以了么，为什么要增加这么多方法呢？因为基本类型没有对象啊，单身狗连在程序中都要差一截，这个世界还真是满满的恶意。<br>　　在实际使用中，我们也可能想获得一个<code>int</code>值的浮点表示，也可能想取一个小数的整数部分，因此<code>JDK</code>将所有的基本数值类型都放到这个抽象类<code>Number</code>中，而各位机智的看官也一定猜到了<strong>Java</strong>中所有的数值类都将通过继承<code>Number</code>类进行实现。下面让我们一起来看一下<strong>Java</strong>是如何为<code>int</code>设计对象的吧。</p>
+<h2 id="Integer类定义"><a href="#Integer类定义" class="headerlink" title="Integer类定义"></a>Integer类定义</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Integer</span> <span class="keyword">extends</span> <span class="title">Number</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Integer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>根据类定义可以得出：</p>
+<blockquote>
+<p><code>Integer</code>继承了<code>Number</code>类，并且本身不可被继承。<br><code>Integer</code>实现了<code>Comparable</code>接口。  </p>
+</blockquote>
+<p>上文已经对<code>Number</code>类作了介绍，那么下面让我们结合<code>Integer</code>类成员来了解一下该类的具体实现吧。</p>
+<h2 id="Integer类设计"><a href="#Integer类设计" class="headerlink" title="Integer类设计"></a>Integer类设计</h2><h3 id="Integer类成员变量"><a href="#Integer类成员变量" class="headerlink" title="Integer类成员变量"></a>Integer类成员变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 序列化标识 */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1360826667806852920L</span>;</span><br><span class="line"><span class="comment">/** 存放Integer的值 */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"><span class="comment">/** Integer的位数 */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE = <span class="number">32</span>;</span><br><span class="line"><span class="comment">/** Integer的字节数 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BYTES = SIZE / Byte.SIZE;</span><br><span class="line"><span class="comment">/** 32位int可表示的最小值 -2^31 */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MIN_VALUE = <span class="number">0x80000000</span>;</span><br><span class="line"><span class="comment">/** 32位int可表示的最大值 2^31-1 */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MAX_VALUE = <span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="comment">/** Integer对应的原子类型 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Class&lt;Integer&gt;  TYPE = (Class&lt;Integer&gt;) Class.getPrimitiveClass(<span class="string">"int"</span>);</span><br></pre></td></tr></table></figure>
+<p>　　<code>Integer</code>类中存放的基本成员变量代码如上，其含义都很直观，这里就不再赘述，其中<code>@Native</code>注解表示该字段可能来自本地常量，了解过<code>JVM</code>结构的看官应该对本地方法区都有所了解，这里就不再展开了。</p>
+<h3 id="Integer成员方法"><a href="#Integer成员方法" class="headerlink" title="Integer成员方法"></a>Integer成员方法</h3><h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 接收int类型参数，直接赋值给value */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Integer</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.value = value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/** 接收String类型参数，默认转换为10进制值，非10进制有效数字则抛出异常 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Integer</span><span class="params">(String s)</span> <span class="keyword">throws</span> NumberFormatException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = parseInt(s, <span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　<code>Integer</code>类提供了两种形式的构造函数，分别用于接收<code>int</code>类型和十进制的<code>String</code>类型值，<code>Integer</code>使用<code>parseInt</code>方法来进行字符串到数值的转换。</p>
+<h4 id="字符串转整型方法"><a href="#字符串转整型方法" class="headerlink" title="字符串转整型方法"></a>字符串转整型方法</h4><h5 id="parseInt方法"><a href="#parseInt方法" class="headerlink" title="parseInt方法"></a>parseInt方法</h5><p>　　首先我们来考虑一个问题：给定一个十进制数的字符串<code>12345</code>，如何把它转换为一个对应的整形数呢？负数怎么处理呢？<br>　　设定<code>int result</code>初值为0，然后从头开始挨个读取字符串<code>string</code>中的字符<code>ch</code>，转换为数字<code>num</code>，并使<code>result = result*10 +  num</code>。对于负数，再加上判断首位是否为<code>-</code>即可。那来看一下<code>Integer</code>是怎么处理的吧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 默认以10进制转换 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span><span class="params">(String s)</span> <span class="keyword">throws</span> NumberFormatException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parseInt(s,<span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/** 指定转换进制 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span><span class="params">(String s, <span class="keyword">int</span> radix)</span></span></span><br><span class="line"><span class="function">                <span class="keyword">throws</span> NumberFormatException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * WARNING: This method may be invoked early during VM initialization</span></span><br><span class="line"><span class="comment">     * before IntegerCache is initialized. Care must be taken to not use</span></span><br><span class="line"><span class="comment">     * the valueOf method.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Character.MIN_RADIX = 2 */</span></span><br><span class="line">    <span class="keyword">if</span> (radix &lt; Character.MIN_RADIX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"radix "</span> + radix +</span><br><span class="line">                                        <span class="string">" less than Character.MIN_RADIX"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/** Character.MAX_RADIX = 36 */</span></span><br><span class="line">    <span class="keyword">if</span> (radix &gt; Character.MAX_RADIX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"radix "</span> + radix +</span><br><span class="line">                                        <span class="string">" greater than Character.MAX_RADIX"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">boolean</span> negative = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, len = s.length();</span><br><span class="line">    <span class="keyword">int</span> limit = -Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">int</span> multmin;</span><br><span class="line">    <span class="keyword">int</span> digit;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> firstChar = s.charAt(<span class="number">0</span>);</span><br><span class="line">		<span class="comment">/** 可能有'+'和'-' */</span></span><br><span class="line">        <span class="keyword">if</span> (firstChar &lt; <span class="string">'0'</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (firstChar == <span class="string">'-'</span>) &#123;</span><br><span class="line">                negative = <span class="keyword">true</span>;</span><br><span class="line">                limit = Integer.MIN_VALUE;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstChar != <span class="string">'+'</span>)</span><br><span class="line">                <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">			<span class="comment">/** 如果字符串中只有一个'+'或'-' */</span></span><br><span class="line">            <span class="keyword">if</span> (len == <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        multmin = limit / radix;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; len) &#123;</span><br><span class="line">            <span class="comment">/** 当前数要在指定进制范围之内，如十进制单个数字在0-9 */</span></span><br><span class="line">            digit = Character.digit(s.charAt(i++),radix);</span><br><span class="line">            <span class="keyword">if</span> (digit &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">            &#125;</span><br><span class="line">			<span class="comment">/** 如果result已超过可表示的最大数 */</span></span><br><span class="line">            <span class="keyword">if</span> (result &lt; multmin) &#123;</span><br><span class="line">                <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">            &#125;</span><br><span class="line">            result *= radix;</span><br><span class="line">            <span class="keyword">if</span> (result &lt; limit + digit) &#123;</span><br><span class="line">                <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">            &#125;</span><br><span class="line">			<span class="comment">/** 通过进行负数计算来避免正数情况下超过32位int最大值 */</span></span><br><span class="line">            result -= digit;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> negative ? result : -result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>Integer</code>的实现与常规的想法没有太大区别，值得注意的是，<code>Integer</code>采用负数做减法的方式，避免了在转换32位最大负数过程中可能产生的溢出问题。　　</p>
+<h5 id="valueOf方法"><a href="#valueOf方法" class="headerlink" title="valueOf方法"></a>valueOf方法</h5><p>　　在parseInt方法中有这样一段注释</p>
+<blockquote>
+<p>WARNING: This method may be invoked early during VM initialization<br>before IntegerCache is initialized. Care must be taken to not use<br>the valueOf method.<br>警告：该方法会在VM初始化时被调用，这时候IntegerCache还没有初始化。<br>一定注意不要使用valueOf方法  </p>
+</blockquote>
+<p>　　接下来让我们看一下<code>valueOf</code>方法和<code>parseInt</code>方法有什么关系吧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(String s)</span> <span class="keyword">throws</span> NumberFormatException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(parseInt(s, <span class="number">10</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>valueOf</code>方法重载了两种形式，接收<code>String</code>类型参数的方法功能与<code>parseInt</code>基本相同，将一个十进制字符串转换成对应的<code>Integer</code>类型，在其转换的过程中首先调用了<code>parseInt</code>方法将字符串转换位<code>int</code>类型，然后再通过<code>int</code>类型参数的<code>valueOf</code>方法将<code>int</code>转换为<code>Integer</code>对象，这个过程称为<strong>装箱</strong>。<br>　　我们通过<code>javap</code>查看<code>Integer i = 10;</code>编译后的字节码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Code:</span><br><span class="line">   0: bipush        10</span><br><span class="line">   2: invokestatic  #2   // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;</span><br></pre></td></tr></table></figure></p>
+<p>　　可以看出这一行代码实际执行过程将会被翻译为<code>Integer i = Integer.valueOf(10)</code>,因此通常情况下我们会说，可以使用基本类型操作的情况下不要有意将其转换为对象，在转换过程中会增添装箱操作的消耗，同理可以推及到<code>Long</code>，<code>Float</code>等基本类型的包装类。毕竟找个对象不容易，又得花钱又得花心思。<br>　　在装箱函数<code>valueOf(int i)</code>中，首先会对<code>i</code>的值判断，如果在<code>IntegerCache.low</code>和<code>IntegerCache.high</code>之间，则会直接返回预存在<code>IntegerCache</code>中的对象，否则才会新建<code>Integer</code>对象。那么<code>IntegerCache</code>是一个什么样的类，该类又做了什么工作呢？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Integer cache[];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">        <span class="comment">//读取JVM参数中配置的初始值</span></span><br><span class="line">        String integerCacheHighPropValue =</span><br><span class="line">            sun.misc.VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>);</span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                i = Math.max(i, <span class="number">127</span>);</span><br><span class="line">                <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span>( NumberFormatException nfe) &#123;</span><br><span class="line">                <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        cache = <span class="keyword">new</span> Integer[(high - low) + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> j = low;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cache.length; k++)</span><br><span class="line">            cache[k] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">        <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>IntegerCache</code>是<code>Integer</code>中定义的私有内部类，其构造方法设置为<code>private</code>,该类将在第一次被使用时初始化，调用其中的<code>static</code>部分代码，静态代码块将会为<code>-128~127</code>之间的数创建好相应的对象放到缓存里，使得在对<code>valueOf</code>的调用中，缩短对<code>-128~127</code>的装箱时间。在<strong>JAVA6</strong>的版本以后，<code>IntegerCache.high</code>的值可以通过在JVM的初始化参数中配置<code>-XX:AutoBoxCacheMax=high</code>来指定缓存的最大值。<br>　　让我们再回到<code>parseInt</code>中的那段注释，那段注释并不是面向使用者的，而是面向源码开发者的，其意图是警告开发者在修改Java源码的时候注意不要在其中调用<code>valueOf</code>方法。</p>
+<h5 id="parseUnsignedInt方法"><a href="#parseUnsignedInt方法" class="headerlink" title="parseUnsignedInt方法"></a>parseUnsignedInt方法</h5><p>　　<code>Integer</code>类设计的真是十分周到，又为我们提供了字符串转为无符号整数的方法<code>parseUnsignedInt</code>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span><span class="params">(String s)</span> <span class="keyword">throws</span> NumberFormatException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> parseInt(s,<span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseUnsignedInt</span><span class="params">(String s, <span class="keyword">int</span> radix)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> NumberFormatException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>)  &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> len = s.length();</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> firstChar = s.charAt(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (firstChar == <span class="string">'-'</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span></span><br><span class="line">                NumberFormatException(String.format(<span class="string">"Illegal leading minus sign "</span> +</span><br><span class="line">                                                   <span class="string">"on unsigned string %s."</span>, s));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 括号中的条件可以理解为在这样的情况下整数长度必然在32位无符号数之内</span></span><br><span class="line">            <span class="keyword">if</span> (len &lt;= <span class="number">5</span> || <span class="comment">// Integer.MAX_VALUE in Character.MAX_RADIX is 6 digits</span></span><br><span class="line">                (radix == <span class="number">10</span> &amp;&amp; len &lt;= <span class="number">9</span>) ) &#123; <span class="comment">// Integer.MAX_VALUE in base 10 is 10 digits</span></span><br><span class="line">                <span class="keyword">return</span> parseInt(s, radix);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 对可能超出长度的数调用Long中的parse方法，其逻辑与parseInt方法相同。</span></span><br><span class="line">                <span class="keyword">long</span> ell = Long.parseLong(s, radix);</span><br><span class="line">                <span class="keyword">if</span> ((ell &amp; <span class="number">0xffff_ffff_0000_0000L</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (<span class="keyword">int</span>) ell;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span></span><br><span class="line">                        NumberFormatException(String.format(<span class="string">"String value %s exceeds "</span> +</span><br><span class="line">                                                            <span class="string">"range of unsigned int."</span>, s));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> NumberFormatException.forInputString(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>parseUnsignedInt</code>同样提供两种形式，在其具体的实现函数中，值得注意的一点是对长整型的判断<code>(ell &amp; 0xffff_ffff_0000_0000L) == 0</code>。我们知道<code>Integer</code>长度是32位，采取64位表示其最大无符号数为<code>0x0000_0000_ffff_ffffL</code>，即前32位一定为0，因此只要在这个范围内的合法整数，与<code>0xffff_ffff_0000_0000</code>做按位与操作，结果一定是0。高富帅都是玩儿位操作的。<br>　　<code>Integer</code>类中常用的<code>String -&gt; int|Integer</code>方法也就介绍完了。还有两个方法分别是：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">decode</span><span class="params">(String nm)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(String nm)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getInteger</span><span class="params">(String nm, <span class="keyword">int</span> val)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>decode</code>方法接受以<code>(+|-)+(0|0x|#)</code>开头的八、十和十六进制字符串，内部实现主要是对格式判断，转换过程调用的是<code>valueOf</code>方法。<code>getInteger</code>方法并不是用来进行字符串转换的，而是配合<code>System.setProperty()</code>使用，获取设置的环境值。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li><code>Integer</code>提供了<code>parseInt</code>，<code>valueOf</code>，<code>parseUnsignedInt</code>方法供我们转换字符串，后两种的实现基本也都是依赖于<code>parseInt</code>进行的。</li>
+<li><code>parseInt</code>和<code>valueOf</code>区别在于前者返回<code>int</code>，后者为<code>Integer</code>，<code>int -&gt; Integer</code>的过程称为装箱，一般情况下尽量使用基本类型操作，减少装箱消耗。<h4 id="整型转字符串"><a href="#整型转字符串" class="headerlink" title="整型转字符串"></a>整型转字符串</h4>　　前面提到的方法都是用于计算字符串对应的整型数字，下面来看一下如何通过整型数字获得对应的字符串吧。<h5 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 继承Object */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">/** 静态，默认10进制 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> radix)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>　　<code>Integer</code>提供了三种形式的<code>toString</code>，第一种重写继承自<code>Object</code>的<code>toString</code>，其内部通过调用<code>toString(i)</code>得到结果，即调用一个<code>Integer</code>对象的<code>toString</code>方法将获得一个<strong>十进制</strong>的字符串表示。第三种形式的<code>toString(int i, int radix)</code>在整体实现上没有特别之处，通过逐次取余来获得每一位数字。在对二到三十六进制之外的数的处理中，第三种方法直接调用了第二种方法，即以十进制方式进行处理，并注为更快的模式。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Use the faster version */</span></span><br><span class="line"><span class="keyword">if</span> (radix &lt; Character.MIN_RADIX || radix &gt; Character.MAX_RADIX)</span><br><span class="line">            radix = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span> (radix == <span class="number">10</span>) &#123;    <span class="keyword">return</span> toString(i);	&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i == Integer.MIN_VALUE)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"-2147483648"</span>;</span><br><span class="line">    <span class="keyword">int</span> size = (i &lt; <span class="number">0</span>) ? stringSize(-i) + <span class="number">1</span> : stringSize(i);</span><br><span class="line">    <span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[size];</span><br><span class="line">    getChars(i, size, buf);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(buf, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　由代码可以看出，更快的模式拢共分三步，<del>第一步，把冰箱门打开！</del>第一步，计算数字长度；第二步，获取相应长度<code>char</code>数组；第三步，新建<code>String</code>对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> [] sizeTable = &#123; <span class="number">9</span>, <span class="number">99</span>, <span class="number">999</span>, <span class="number">9999</span>, <span class="number">99999</span>, <span class="number">999999</span>, <span class="number">9999999</span>,</span><br><span class="line">                                      <span class="number">99999999</span>, <span class="number">999999999</span>, Integer.MAX_VALUE &#125;;</span><br><span class="line">    <span class="comment">// Requires positive x</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">stringSize</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; ; i++)</span><br><span class="line">            <span class="keyword">if</span> (x &lt;= sizeTable[i])</span><br><span class="line">                <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　<code>Java</code>在<code>stringSize</code>方法中巧妙的通过最多10次比较来避免使用除法计算位数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">char</span> [] DigitTens = &#123;</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>,</span><br><span class="line">    <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="string">'1'</span>,</span><br><span class="line">    <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>, <span class="string">'2'</span>,</span><br><span class="line">    <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>, <span class="string">'3'</span>,</span><br><span class="line">    <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>, <span class="string">'4'</span>,</span><br><span class="line">    <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>, <span class="string">'5'</span>,</span><br><span class="line">    <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>, <span class="string">'6'</span>,</span><br><span class="line">    <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>, <span class="string">'7'</span>,</span><br><span class="line">    <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>, <span class="string">'8'</span>,</span><br><span class="line">    <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>, <span class="string">'9'</span>,</span><br><span class="line">    &#125; ;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">char</span> [] DigitOnes = &#123;</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">    &#125; ;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">char</span>[] digits = &#123;</span><br><span class="line">    <span class="string">'0'</span> , <span class="string">'1'</span> , <span class="string">'2'</span> , <span class="string">'3'</span> , <span class="string">'4'</span> , <span class="string">'5'</span> ,</span><br><span class="line">    <span class="string">'6'</span> , <span class="string">'7'</span> , <span class="string">'8'</span> , <span class="string">'9'</span> , <span class="string">'a'</span> , <span class="string">'b'</span> ,</span><br><span class="line">    <span class="string">'c'</span> , <span class="string">'d'</span> , <span class="string">'e'</span> , <span class="string">'f'</span> , <span class="string">'g'</span> , <span class="string">'h'</span> ,</span><br><span class="line">    <span class="string">'i'</span> , <span class="string">'j'</span> , <span class="string">'k'</span> , <span class="string">'l'</span> , <span class="string">'m'</span> , <span class="string">'n'</span> ,</span><br><span class="line">    <span class="string">'o'</span> , <span class="string">'p'</span> , <span class="string">'q'</span> , <span class="string">'r'</span> , <span class="string">'s'</span> , <span class="string">'t'</span> ,</span><br><span class="line">    <span class="string">'u'</span> , <span class="string">'v'</span> , <span class="string">'w'</span> , <span class="string">'x'</span> , <span class="string">'y'</span> , <span class="string">'z'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getChars</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> index, <span class="keyword">char</span>[] buf)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> q, r;</span><br><span class="line">    <span class="keyword">int</span> charPos = index;</span><br><span class="line">    <span class="keyword">char</span> sign = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        sign = <span class="string">'-'</span>;</span><br><span class="line">        i = -i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Generate two digits per iteration</span></span><br><span class="line">	<span class="comment">// q = i/100; r=i%100; i=q;</span></span><br><span class="line">    <span class="keyword">while</span> (i &gt;= <span class="number">65536</span>) &#123;</span><br><span class="line">        q = i / <span class="number">100</span>;</span><br><span class="line">    <span class="comment">//  相当于 r = i - (q*100)</span></span><br><span class="line">        r = i - ((q &lt;&lt; <span class="number">6</span>) + (q &lt;&lt; <span class="number">5</span>) + (q &lt;&lt; <span class="number">2</span>));</span><br><span class="line">        i = q;</span><br><span class="line">        buf [--charPos] = DigitOnes[r];</span><br><span class="line">        buf [--charPos] = DigitTens[r];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Fall thru to fast mode for smaller numbers</span></span><br><span class="line">    <span class="comment">// assert(i &lt;= 65536, i);</span></span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">	    <span class="comment">//  相当于i/10</span></span><br><span class="line">        q = (i * <span class="number">52429</span>) &gt;&gt;&gt; (<span class="number">16</span>+<span class="number">3</span>);</span><br><span class="line">        r = i - ((q &lt;&lt; <span class="number">3</span>) + (q &lt;&lt; <span class="number">1</span>));  <span class="comment">// r = i-(q*10) ...</span></span><br><span class="line">        buf [--charPos] = digits [r];</span><br><span class="line">        i = q;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (sign != <span class="number">0</span>) &#123;</span><br><span class="line">        buf [--charPos] = sign;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　在<code>getChars</code>方法中使用了很多位操作来避免做除法，在该方法中，首先把一个数以<code>65536</code>为界划分为两部分：在大于<code>65536</code>的时候，通过循环对<code>100</code>除余每次获得末尾的两位数字，并通过查表来直接获取到对应位置的数字，其中<code>q &lt;&lt; 6 + q &lt;&lt; 5 + q &lt;&lt; 2</code>相当于<code>q * 2^6 + q * 2^5 + q * 2^2 = q * 100</code>；在小于等于<code>65536</code>的情况下，通过循环对<code>10</code>除余然后查表来获得末尾的数字，其中<code>(i * 52429) &gt;&gt;&gt; (16 + 3)</code>相当于<code>i * 52429 / 524288 = i * 0.1</code>。那么到这里呢各位看官可能会有几个问题。</p>
+<blockquote>
+<p>　　1. <code>&gt;&gt;&gt;</code>移位和<code>&gt;&gt;</code>移位有什么区别。<br>　　2. 为什么以<code>65536</code>为界划分。<br>　　3. <code>digits</code>数组为什么还有<code>a~z</code>。  </p>
+</blockquote>
+<p>　　<code>&gt;&gt;&gt;</code>移位是无符号移位，我们知道对于负数进行移位操作会在高位补1，而<code>&gt;&gt;&gt;</code>会在高位补0，即可以理解为无符号除法。而<code>digits</code>数组因为在对其他进制的转换中也用到，因此该数组列出的是在36进制中所有可以合法表示数字的字符。对于第二个问题，65536是怎么划分的来的呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">n = 10, 2^n = 1024, 103/1024 = 0.1005859375</span><br><span class="line">n = 11, 2^n = 2048, 205/2048 = 0.10009765625</span><br><span class="line">n = 12, 2^n = 4096, 410/4096 = 0.10009765625</span><br><span class="line">n = 13, 2^n = 8192, 820/8192 = 0.10009765625</span><br><span class="line">n = 14, 2^n = 16384, 1639/16384 = 0.10003662109375</span><br><span class="line">n = 15, 2^n = 32768, 3277/32768 = 0.100006103515625</span><br><span class="line">n = 16, 2^n = 65536, 6554/65536 = 0.100006103515625</span><br><span class="line">n = 17, 2^n = 131072, 13108/131072 = 0.100006103515625</span><br><span class="line">n = 18, 2^n = 262144, 26215/262144 = 0.10000228881835938</span><br><span class="line">n = 19, 2^n = 524288, 52429/524288 = 0.10000038146972656</span><br><span class="line">n = 20, 2^n = 1048576, 104858/1048576 = 0.10000038146972656</span><br></pre></td></tr></table></figure></p>
+<p>　　首先通过以上数据可以看出，在<code>n = 19</code>时，除数的结果达到小数点后6位即单精度浮点有效小数位数，因此选取了<code>52429 &gt;&gt;&gt; (19)</code>来提升精度，<code>52429</code>的长度在<code>15~16</code>位之间，因此划分界限选取为<code>2^16</code>即65536，这里可能有看官要问了，<code>52429 * 65536</code>也超过了<code>2^31-1</code>了呀，注意到这里使用的是<code>&gt;&gt;&gt;</code>无符号移位，32位整型可表示的最大无符号数位<code>2^33 - 1</code>，因此不必担心溢出造成的损失。</p>
+<h5 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>在Java源码中，有很多与数字相关的操作都是通过移位来进行，从这些地方我们可以看到设计者对细节的把控。而在我们自己的开发过程中，是否也有必要这么锱铢必较呢？博主对上述<code>getChars</code>方法中通过移位除10的方式和直接除10的方式进行了比较，在一百万次循环后得到几次不稳定的结果，其平均值也仅在2~3m左右。随着现代JVM优化能力的不断提升，这样操作的性能差距将越来越小，然而作为一个CS专业及从业者，对底层的实现更能加深我们对代码的理解。下一章将继续对<code>Integer</code>类进行分析，其中将主要介绍到<code>Integer</code>中通过位操作实现的功能。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/源码剖析/" rel="tag"># 源码剖析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/03/Java源码剖析从入门到放弃 — Integer(二)/" rel="prev" title="page">
+                page <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjMxMi84ODcz"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cccc0der</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/cccc0der" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Number类"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#Number&#x7C7B;" class="headerlink" title="Number&#x7C7B;"></a>Number&#x7C7B;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Integer类定义"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Integer&#x7C7B;&#x5B9A;&#x4E49;" class="headerlink" title="Integer&#x7C7B;&#x5B9A;&#x4E49;"></a>Integer&#x7C7B;&#x5B9A;&#x4E49;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Integer类设计"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Integer&#x7C7B;&#x8BBE;&#x8BA1;" class="headerlink" title="Integer&#x7C7B;&#x8BBE;&#x8BA1;"></a>Integer&#x7C7B;&#x8BBE;&#x8BA1;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Integer类成员变量"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#Integer&#x7C7B;&#x6210;&#x5458;&#x53D8;&#x91CF;" class="headerlink" title="Integer&#x7C7B;&#x6210;&#x5458;&#x53D8;&#x91CF;"></a>Integer&#x7C7B;&#x6210;&#x5458;&#x53D8;&#x91CF;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Integer成员方法"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#Integer&#x6210;&#x5458;&#x65B9;&#x6CD5;" class="headerlink" title="Integer&#x6210;&#x5458;&#x65B9;&#x6CD5;"></a>Integer&#x6210;&#x5458;&#x65B9;&#x6CD5;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数"><span class="nav-number">3.2.1.</span> <span class="nav-text"><a href="#&#x6784;&#x9020;&#x51FD;&#x6570;" class="headerlink" title="&#x6784;&#x9020;&#x51FD;&#x6570;"></a>&#x6784;&#x9020;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串转整型方法"><span class="nav-number">3.2.2.</span> <span class="nav-text"><a href="#&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6574;&#x578B;&#x65B9;&#x6CD5;" class="headerlink" title="&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6574;&#x578B;&#x65B9;&#x6CD5;"></a>&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6574;&#x578B;&#x65B9;&#x6CD5;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#parseInt方法"><span class="nav-number">3.2.2.1.</span> <span class="nav-text"><a href="#parseInt&#x65B9;&#x6CD5;" class="headerlink" title="parseInt&#x65B9;&#x6CD5;"></a>parseInt&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#valueOf方法"><span class="nav-number">3.2.2.2.</span> <span class="nav-text"><a href="#valueOf&#x65B9;&#x6CD5;" class="headerlink" title="valueOf&#x65B9;&#x6CD5;"></a>valueOf&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#parseUnsignedInt方法"><span class="nav-number">3.2.2.3.</span> <span class="nav-text"><a href="#parseUnsignedInt&#x65B9;&#x6CD5;" class="headerlink" title="parseUnsignedInt&#x65B9;&#x6CD5;"></a>parseUnsignedInt&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">3.2.2.4.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整型转字符串"><span class="nav-number">3.2.3.</span> <span class="nav-text"><a href="#&#x6574;&#x578B;&#x8F6C;&#x5B57;&#x7B26;&#x4E32;" class="headerlink" title="&#x6574;&#x578B;&#x8F6C;&#x5B57;&#x7B26;&#x4E32;"></a>&#x6574;&#x578B;&#x8F6C;&#x5B57;&#x7B26;&#x4E32;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#toString方法"><span class="nav-number">3.2.3.1.</span> <span class="nav-text"><a href="#toString&#x65B9;&#x6CD5;" class="headerlink" title="toString&#x65B9;&#x6CD5;"></a>toString&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结-1"><span class="nav-number">3.2.3.2.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;-1" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017/12/06 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cccc0der</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
